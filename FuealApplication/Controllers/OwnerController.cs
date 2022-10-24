@@ -1,6 +1,10 @@
-﻿using FuealApplication.Models;
+﻿using BCrypt.Net;
+using FuealApplication.Models;
 using FuealApplication.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Driver.Core.Authentication;
+using System.Security.Cryptography;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,6 +14,7 @@ namespace FuealApplication.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
+        //public static OwnerDto newOwner = new OwnerDto();
         private readonly IOwnerServices ownerServices;
 
         public OwnerController(IOwnerServices ownerServices) 
@@ -31,7 +36,7 @@ namespace FuealApplication.Controllers
 
             if (owner == null)
             {
-                return NotFound($"Owner not found");
+                return NotFound("Owner not found");
             }
             return owner;
         }
@@ -76,6 +81,31 @@ namespace FuealApplication.Controllers
 
             return Ok($"Deleted {id} successfully!");
         }
-    
+
+        [HttpPost("login")]
+        public ActionResult<Owner> Post(string username, string password)
+        {
+            var ownerUsername = ownerServices.AuthenticateUsername(username).ToString();
+            var ownerPassword = ownerServices.AuthenticatePassword(password).ToString();
+
+            if ( username == null || password == null)
+            {
+                return BadRequest("Provide user credentials");
+            }
+
+            if (ownerUsername == null || ownerPassword == null)
+            {
+                return BadRequest("Incorrect User credentials");
+            }
+
+            bool isValidPassword = BCrypt.Net.BCrypt.Verify(password, ownerPassword);
+
+            if (isValidPassword)
+            return Ok("User logged in successfully");
+
+            return BadRequest();
+
+        }
+
     }
 }

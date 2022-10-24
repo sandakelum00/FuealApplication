@@ -17,8 +17,21 @@ namespace FuealApplication.Services
         public Owner CreateOwner(Owner owner)
         {
             //throw new NotImplementedException();
+            owner.Password = BCrypt.Net.BCrypt.HashPassword(owner.Password);
             _owners.InsertOne(owner);
             return owner;
+        }
+
+        public Owner AuthenticatePassword(string password)
+        {
+            //throw new NotImplementedException();
+            return _owners.Find(owner => owner.Password == password).FirstOrDefault();
+        }
+
+        public Owner AuthenticateUsername(string username)
+        {
+            //throw new NotImplementedException();
+            return _owners.Find(owner => owner.UserName == username).FirstOrDefault();
         }
 
         public Owner GetOwner(string id)
@@ -44,5 +57,6 @@ namespace FuealApplication.Services
             //throw new NotImplementedException();
             _owners.ReplaceOne(owner => owner.Id == id, owner);
         }
+
     }
 }
