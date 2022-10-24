@@ -31,7 +31,7 @@ namespace FuealApplication.Controllers
 
             if (owner == null)
             {
-                return NotFound($"Station not found");
+                return NotFound($"Owner not found");
             }
             return owner;
         }

@@ -18,6 +18,7 @@ new MongoClient(builder.Configuration.GetValue<string>("StationStoreDatabaseSett
 
 builder.Services.AddScoped<IStationServices, StationService>();
 builder.Services.AddScoped<IOwnerServices, OwnerService>();
+builder.Services.AddScoped<IUserServices,UserService>();
 
 builder.Services.AddControllers();
  //Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
