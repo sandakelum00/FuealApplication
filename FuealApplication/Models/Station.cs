@@ -4,6 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace FuealApplication.Models
 {
+    [BsonIgnoreExtraElements]
     public class Station
     {
         [BsonId]
