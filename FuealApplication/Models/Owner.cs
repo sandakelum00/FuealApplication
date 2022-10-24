@@ -17,8 +17,8 @@ namespace FuealApplication.Models
         public string UserName { get; set; } = string.Empty;
 
         [BsonElement("Password")]
-        public string Passwod { get; set; } = string.Empty;
-
+        public string Password { get; set; } = string.Empty;
+        
         [BsonElement("Contact Number")]
         public string ContactNumber { get; set; } = string.Empty;
     }

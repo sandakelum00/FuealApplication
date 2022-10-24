@@ -9,5 +9,7 @@ namespace FuealApplication.Services
         Owner CreateOwner(Owner owner);
         void UpdateOwner(string id, Owner owner);
         void RemoveOwner(string id);
+        Owner AuthenticateUsername(string username);
+        Owner AuthenticatePassword(string password);
     }
 }
